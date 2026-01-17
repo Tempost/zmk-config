@@ -3,7 +3,11 @@
 .venv/
 .west/
 build/
+.build/
+.direnv
+firmware
 modules/
 zephyr/
 zmk/
 .cache/
+*.u2f
