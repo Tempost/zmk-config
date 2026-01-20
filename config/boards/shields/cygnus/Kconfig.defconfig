@@ -1,20 +1,28 @@
-config CONFIG_LOG_PROCESS_THREAD_STARTUP_DELAY_MS
-  int
-  default 8000
-
-if SHIELD_CYGNUS_LEFT
-
-config ZMK_KEYBOARD_NAME
-    default "Cygnus"
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
-endif
-
-if SHIELD_CYGNUS_LEFT || SHIELD_CYGNUS_RIGHT
-
 config ZMK_SPLIT
+  default y
+
+config ZMK_BLE
+  default y
+
+config ZMK_BLE_EXPERIMENTAL_FEATURES
+  default y
+
+if SHIELD_DONGLE
+  config ZMK_KEYBOARD_NAME
+    default "Cygnus Dongle"
+
+  config ZMK_SPLIT_ROLE_CENTRAL
     default y
 
+  config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
+    default 2
+
+  config ZMK_SLEEP
+    default y
+
+  config BT_MAX_CONN
+    default 7
+
+  config BT_MAX_CONN
+    default 7
 endif

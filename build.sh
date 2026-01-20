@@ -1,8 +1,21 @@
 #!/bin/sh
 set -e
 
-west build -s zmk/app -d build/left -b xiao_ble --pristine -- -DZMK_CONFIG=/home/cody/src/zmk-config/config -DSHIELD=cygnus_left
-west build -s zmk/app -d build/right -b xiao_ble --pristine -- -DZMK_CONFIG=/home/cody/src/zmk-config/config -DSHIELD=cygnus_right
+CMAKE_ARGS="-DZMK_CONFIG=$HOME/src/zmk-config/config"
+WEST_OPTS="-s zmk/app -b xiao_ble --pristine"
 
+west build ${WEST_OPTS} -d build/dongle -S zmk-usb-logging -- \
+	"${CMAKE_ARGS}" \
+	-DSHIELD="cygnus_dongle prospector_adapter"
+
+west build ${WEST_OPTS} -s zmk/app -d build/left -- \
+	"${CMAKE_ARGS}" \
+	-DSHIELD=cygnus_left
+
+west build ${WEST_OPTS} -d build/right -- \
+	"${CMAKE_ARGS}" \
+	-DSHIELD=cygnus_right
+
+cp build/dongle/zephyr/zmk.uf2 cygnus_dongle.u2f
 cp build/left/zephyr/zmk.uf2 cygnus_left.u2f
 cp build/right/zephyr/zmk.uf2 cygnus_right.u2f
