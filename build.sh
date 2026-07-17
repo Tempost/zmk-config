@@ -1,18 +1,20 @@
 #!/bin/sh
 set -e
 
-CMAKE_ARGS="-DZMK_CONFIG=$HOME/src/zmk-config/config"
-WEST_OPTS="-s zmk/app -b xiao_ble --pristine"
+. .venv/bin/activate
 
-west build ${WEST_OPTS} -d build/dongle -S zmk-usb-logging -- \
-	"${CMAKE_ARGS}" \
+CMAKE_ARGS="-DZMK_CONFIG=$HOME/src/zmk-config/config"
+WEST_OPTS="build -s zmk/app -b xiao_ble --pristine"
+
+west ${WEST_OPTS} -d build/dongle -S zmk-usb-logging -- \
+	"${CMAKE_ARGS}" -DZMK_EXTRA_MODULES=/home/cody/src/zmk-config/prospector-zmk-module \
 	-DSHIELD="cygnus_dongle prospector_adapter"
 
-west build ${WEST_OPTS} -s zmk/app -d build/left -- \
+west ${WEST_OPTS} -d build/left -- \
 	"${CMAKE_ARGS}" \
 	-DSHIELD=cygnus_left
 
-west build ${WEST_OPTS} -d build/right -- \
+west ${WEST_OPTS} -d build/right -- \
 	"${CMAKE_ARGS}" \
 	-DSHIELD=cygnus_right
 

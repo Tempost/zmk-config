@@ -7,6 +7,9 @@ config ZMK_BLE
 config ZMK_BLE_EXPERIMENTAL_FEATURES
   default y
 
+config ZMK_POINTING
+  default y 
+
 if SHIELD_DONGLE
   config ZMK_KEYBOARD_NAME
     default "Cygnus Dongle"
